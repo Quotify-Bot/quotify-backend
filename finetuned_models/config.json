@@ -1,5 +1,5 @@
 {
-  "_name_or_path": "gpt2",
+  "_name_or_path": "drive/MyDrive/gpt2-quoter/modelv1/checkpoint-28000",
   "activation_function": "gelu_new",
   "architectures": [
     "GPT2LMHeadModel"
