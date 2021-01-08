@@ -30,8 +30,14 @@ async def generate(quote: Quote):
     quote.output = generator.generate_text(quote.start_text)
     return {"output" : quote.output}
 
+@app.get("/generate/{start_text}/{min_length}/{max_length}/{temperature}")
+def read_root(start_text: str, min_length: int=10, max_length: int=50, temperature: float=0.9):
+    output = generator.generate_text(start_text, min_length, max_length, temperature)
+    return {"output" : output}
+
 @app.get("/generate/{start_text}")
 def read_root(start_text: str):
     output = generator.generate_text(start_text)
     return {"output" : output}
+
 
