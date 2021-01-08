@@ -16,18 +16,22 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=['*'],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"Quotify": "Turn your words into wisdom"}
 
 @app.post("/generate_quote/")
 async def generate(quote: Quote):
     quote.output = generator.generate_text(quote.start_text)
     return {"output" : quote.output}
 
+@app.get("/generate/{start_text}")
+def read_root(start_text: str):
+    output = generator.generate_text(start_text)
+    return {"output" : output}
 
