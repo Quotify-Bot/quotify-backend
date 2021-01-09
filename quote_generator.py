@@ -2,6 +2,7 @@ from transformers import pipeline, set_seed
 from transformers.pipelines import TextGenerationPipeline
 from transformers import *
 import re
+import random
 
 class TextGenerator:
     def __init__(self):
@@ -24,7 +25,20 @@ class TextGenerator:
         return quote
 
     def generate_text(self, starting_text: str, min_length=10, max_length=50, temperature=0.9) -> str:
-        quote = self.generator(starting_text.strip(), min_length = min_length, max_length = max_length, temperature = temperature, top_k=50, top_p=0.95, no_repeat_ngram_size = 3, repetition_penalty=1.2)[0]['generated_text']
+        prompts = [
+          "In the end",
+          "Happiness is a",
+          "Life finds a way",
+          "Motivation is",
+          "Small steps",
+          "To be the best",]
+
+        if(starting_text.strip() == ''):
+            prompt = random.choice(prompts)
+            quote =self.generator(prompt, min_length = min_length, max_length = max_length, temperature = temperature, top_k=50, top_p=0.95, no_repeat_ngram_size = 3, repetition_penalty=1.2)[0]['generated_text']
+            return self.clean_text(quote)
+
+        quote =self.generator(starting_text.strip(), min_length = min_length, max_length = max_length, temperature = temperature, top_k=50, top_p=0.95, no_repeat_ngram_size = 3, repetition_penalty=1.2)[0]['generated_text']
         return self.clean_text(quote)
 
 
