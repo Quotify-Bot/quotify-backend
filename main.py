@@ -7,9 +7,11 @@ from quote_generator import *
 generator = TextGenerator()
 generator.load_generator()
 
+
 class Quote(BaseModel):
     start_text: str
     output: str = None
+
 
 app = FastAPI()
 
@@ -21,23 +23,25 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/")
 def read_root():
     return {"Quotify": "Turn your words into wisdom"}
 
+
 @app.post("/generate_quote/")
 async def generate(quote: Quote):
     quote.output = generator.generate_text(quote.start_text)
-    return {"output" : quote.output}
+    return {"output": quote.output}
+
 
 @app.get("/generate/{start_text}/{min_length}/{max_length}/{temperature}")
-def read_root(start_text: str, min_length: int=10, max_length: int=50, temperature: float=0.9):
+def read_root(start_text: str, min_length: int = 10, max_length: int = 50, temperature: float = 0.9):
     output = generator.generate_text(start_text, min_length, max_length, temperature)
-    return {"output" : output}
+    return {"output": output}
+
 
 @app.get("/generate/{start_text}")
 def read_root(start_text: str):
     output = generator.generate_text(start_text)
-    return {"output" : output}
-
-
+    return {"output": output}

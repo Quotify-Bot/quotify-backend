@@ -4,6 +4,7 @@ from transformers import *
 import re
 import random
 
+
 class TextGenerator:
     def __init__(self):
         self.generator: TextGenerationPipeline
@@ -14,31 +15,29 @@ class TextGenerator:
         self.generator = pipeline('text-generation', model= self.model, tokenizer = self.tokenizer)
 
     def clean_text(self, quote):
-        #Remove extra spaces
+        # Remove extra spaces
         quote = re.sub("\s\s+", " ", quote)
-        #Remove space before punctuation
+        # Remove space before punctuation
         quote = re.sub(r'\s+([?.!,;])', r'\1', quote)
-        #Remove space after punctuation
+        # Remove space after punctuation
         quote = re.sub(r'(["\'])\s+', r'\1', quote)
-        #Sentence case
-        quote  = quote.capitalize().strip()
+        # Sentence case
+        quote = quote.capitalize().strip()
         return quote
 
     def generate_text(self, starting_text: str, min_length=10, max_length=50, temperature=0.9) -> str:
         prompts = [
-          "In the end",
-          "Happiness is a",
-          "Life finds a way",
-          "Motivation is",
-          "Small steps",
-          "To be the best",]
+            "In the end",
+            "Happiness is a",
+            "Life finds a way",
+            "Motivation is",
+            "Small steps",
+            "To be the best", ]
 
-        if(starting_text.strip() == ''):
+        if(starting_text.strip() == '' or starting_text.strip() == 'rand'):
             prompt = random.choice(prompts)
-            quote =self.generator(prompt, min_length = min_length, max_length = max_length, temperature = temperature, top_k=50, top_p=0.95, no_repeat_ngram_size = 3, repetition_penalty=1.2)[0]['generated_text']
+            quote = self.generator(prompt, min_length = min_length, max_length = max_length, temperature = temperature, top_k=50, top_p=0.95, no_repeat_ngram_size = 3, repetition_penalty=1.2)[0]['generated_text']
             return self.clean_text(quote)
 
-        quote =self.generator(starting_text.strip(), min_length = min_length, max_length = max_length, temperature = temperature, top_k=50, top_p=0.95, no_repeat_ngram_size = 3, repetition_penalty=1.2)[0]['generated_text']
+        quote = self.generator(starting_text.strip(), min_length = min_length, max_length = max_length, temperature = temperature, top_k=50, top_p=0.95, no_repeat_ngram_size = 3, repetition_penalty=1.2)[0]['generated_text']
         return self.clean_text(quote)
-
-
