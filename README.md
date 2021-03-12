@@ -1,7 +1,7 @@
 # quotify-backend
 
 ## About
-API for the quotify app to generate quotes using a finetuned GPT2 model. The model can be downloaded from the [releases](https://github.com/Quotify-Bot/quotify-backend/releases/tag/v1.1) page. The backend was built using [FastAPI](https://fastapi.tiangolo.com/) and deployed with [Docker](https://www.docker.com/) on Google Cloud Platform.  
+API for the [Quotify webapp](https://github.com/Quotify-Bot/quotify-frontend) to generate quotes using a finetuned GPT2 model. The model can be downloaded from the [releases](https://github.com/Quotify-Bot/quotify-backend/releases/tag/v1.1) page. The backend was built using [FastAPI](https://fastapi.tiangolo.com/) and deployed with [Docker](https://www.docker.com/) on Google Cloud Platform.  
 
 This was the best method we managed to find to deploy large models (>500MB) to the cloud. 
 
